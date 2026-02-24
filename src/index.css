@@ -4,9 +4,9 @@
 
 :root {
   color-scheme: dark;
-  --bg-primary: #304352;
-  --bg-gradient: linear-gradient(to right, #d7d2cc 0%, #304352 100%);
-  --bg-secondary: rgba(35, 48, 60, 0.85);
+  --bg-primary: #1a1a1a;
+  --bg-gradient: linear-gradient(to right, #434343 0%, black 100%);
+  --bg-secondary: rgba(30, 30, 30, 0.85);
   --bg-card: rgba(255, 255, 255, 0.06);
   --bg-card-hover: rgba(255, 255, 255, 0.1);
   --border-color: rgba(255, 255, 255, 0.1);
