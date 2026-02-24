@@ -1,4 +1,6 @@
-# Jotish — Employee Portal 🚀
+# Jotish — Employee Portal
+
+**Live URL:** [https://jotish-sigma.vercel.app/](https://jotish-sigma.vercel.app/)
 
 A fully-featured **ReactJS Employee Management Portal** with login, paginated data tables, camera capture, salary bar chart, and an interactive map.
 
