@@ -16,7 +16,7 @@ const DarkModeToggle = () => {
       onClick={() => setIsDark(d => !d)}
       title="Toggle theme"
       aria-label="Toggle dark mode"
-      style={{ fontSize: '18px', padding: '6px 10px' }}
+      style={{ fontSize: 14, fontWeight: 500, padding: '6px 14px' }}
     >
       {isDark ? 'Light' : 'Dark'}
     </button>

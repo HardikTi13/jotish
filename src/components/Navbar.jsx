@@ -15,6 +15,8 @@ const Navbar = () => {
   return (
     <nav style={{
       background: 'var(--bg-secondary)',
+      backdropFilter: 'blur(16px)',
+      WebkitBackdropFilter: 'blur(16px)',
       borderBottom: '1px solid var(--border-color)',
       padding: '12px 24px',
       display: 'flex',
@@ -29,20 +31,21 @@ const Navbar = () => {
           width: 32, height: 32, borderRadius: 8,
           background: 'var(--accent)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 16, fontWeight: 700, color: '#fff'
+          fontSize: 15, fontWeight: 700, color: '#fff'
         }}>J</span>
         <span style={{ fontWeight: 700, fontSize: 17, letterSpacing: '-0.3px' }}>
           Jotish
         </span>
       </Link>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         {user && (
           <span style={{
-            fontSize: 13, color: 'var(--text-secondary)',
+            fontSize: 14, fontWeight: 500, color: 'var(--text-primary)',
             background: 'var(--bg-card)',
             border: '1px solid var(--border-color)',
-            borderRadius: 6, padding: '4px 10px'
+            borderRadius: 8, padding: '6px 14px',
+            letterSpacing: '0.01em'
           }}>
             {user.username}
           </span>
