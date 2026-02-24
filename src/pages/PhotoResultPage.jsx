@@ -14,10 +14,10 @@ const PhotoResultPage = () => {
       <>
         <Navbar />
         <div className="page" style={{ textAlign: 'center', paddingTop: 80 }}>
-          <p style={{ fontSize: 40, marginBottom: 16 }}>📷</p>
           <h2>No photo found</h2>
+          <p style={{ color: 'var(--text-secondary)', marginTop: 8 }}>Capture a photo from the details page.</p>
           <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={() => navigate('/list')}>
-            ← Back to List
+            Back to List
           </button>
         </div>
       </>
@@ -28,14 +28,12 @@ const PhotoResultPage = () => {
     <>
       <Navbar />
       <div className="page">
-        <div className="gradient-bg" />
-
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           style={{ marginBottom: 28 }}
         >
-          <h1 className="page-title">📸 Captured Photo</h1>
+          <h1 className="page-title">Captured Photo</h1>
           {employee?.name && (
             <p className="page-subtitle">Photo of {employee.name}</p>
           )}
@@ -66,25 +64,24 @@ const PhotoResultPage = () => {
               className="btn btn-secondary"
               onClick={() => navigate('/details', { state: { employee }, replace: true })}
             >
-              🔄 Retake Photo
+              Retake Photo
             </button>
             <button
               id="back-to-list-btn"
               className="btn btn-primary"
               onClick={() => navigate('/list')}
             >
-              📋 Back to List
+              Back to List
             </button>
           </motion.div>
 
-          {/* Download link */}
           <div style={{ marginTop: 16 }}>
             <a
               href={image}
               download={`photo_${employee?.name?.replace(/\s+/g, '_') || 'capture'}.png`}
               className="btn btn-secondary btn-sm"
             >
-              ⬇️ Download Photo
+              Download Photo
             </a>
           </div>
         </motion.div>

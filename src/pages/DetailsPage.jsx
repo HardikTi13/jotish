@@ -15,10 +15,10 @@ const DetailsPage = () => {
       <>
         <Navbar />
         <div className="page" style={{ textAlign: 'center', paddingTop: 80 }}>
-          <p style={{ fontSize: 40, marginBottom: 16 }}>🕵️</p>
           <h2>No employee selected</h2>
+          <p style={{ color: 'var(--text-secondary)', marginTop: 8 }}>Please choose an employee from the list.</p>
           <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={() => navigate('/list')}>
-            ← Back to List
+            Back to List
           </button>
         </div>
       </>
@@ -53,8 +53,6 @@ const DetailsPage = () => {
         />
       )}
       <div className="page">
-        <div className="gradient-bg" />
-
         {/* Back + Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -72,19 +70,20 @@ const DetailsPage = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
               {/* Avatar */}
               <div style={{
-                width: 64, height: 64, borderRadius: '50%',
-                background: 'linear-gradient(135deg, #7c3aed, #06b6d4)',
+                width: 56, height: 56, borderRadius: '50%',
+                background: 'var(--accent)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 26, fontWeight: 800, color: '#fff', flexShrink: 0
+                fontSize: 22, fontWeight: 700, color: '#fff', flexShrink: 0
               }}>
                 {String(employee.name || employee.Name || 'E')[0].toUpperCase()}
               </div>
               <div>
-                <h1 className="page-title" style={{ fontSize: 24 }}>
+                <h1 className="page-title" style={{ fontSize: 22 }}>
                   {employee.name || employee.Name || 'Employee Details'}
                 </h1>
                 <p className="page-subtitle">
-                  {employee.department || employee.Department || ''}{employee.designation ? ` · ${employee.designation}` : ''}
+                  {employee.designation || employee.department || ''}
+                  {employee.city ? ` · ${employee.city}` : ''}
                 </p>
               </div>
             </div>
@@ -94,7 +93,7 @@ const DetailsPage = () => {
               className="btn btn-primary"
               onClick={() => setShowCamera(true)}
             >
-              📸 Capture Photo
+              Capture Photo
             </button>
           </div>
         </motion.div>
@@ -117,12 +116,7 @@ const DetailsPage = () => {
               <div className="detail-label">{formatKey(key)}</div>
               <div
                 className="detail-value"
-                style={key.toLowerCase() === 'salary' ? {
-                  background: 'var(--accent-grad)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                } : {}}
+                style={key.toLowerCase() === 'salary' ? { color: 'var(--success)' } : {}}
               >
                 {formatValue(key, value)}
               </div>

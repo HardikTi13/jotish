@@ -91,7 +91,7 @@ const ListPage = () => {
     <>
       <Navbar />
       <div className="page">
-        <div className="gradient-bg" />
+
 
         {/* Header */}
         <motion.div
@@ -106,16 +106,16 @@ const ListPage = () => {
             </div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               <button className="btn btn-secondary" onClick={() => navigate('/chart')}>
-                📊 Salary Chart
+                Salary Chart
               </button>
               <button className="btn btn-secondary" onClick={() => navigate('/map')}>
-                🗺️ View Map
+                View Map
               </button>
             </div>
           </div>
         </motion.div>
 
-        {error && <div className="alert alert-error" style={{ marginBottom: 20 }}>⚠️ {error}</div>}
+        {error && <div className="alert alert-error" style={{ marginBottom: 20 }}>{error}</div>}
 
         {/* Search + Sort Controls */}
         <motion.div
@@ -128,7 +128,7 @@ const ListPage = () => {
             id="search-emp"
             type="text"
             className="input"
-            placeholder="🔍 Search employees…"
+            placeholder="Search employees…"
             value={search}
             onChange={e => { setSearch(e.target.value); setPage(1) }}
             style={{ maxWidth: 340 }}

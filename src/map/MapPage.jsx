@@ -139,7 +139,6 @@ const MapPage = () => {
       <>
         <Navbar />
         <div className="page" style={{ textAlign: 'center', paddingTop: 80 }}>
-          <p style={{ fontSize: 40, marginBottom: 16 }}>🗺️</p>
           <h2>No employee data available</h2>
           <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={() => navigate('/list')}>
             ← Back to List
@@ -153,7 +152,7 @@ const MapPage = () => {
     <>
       <Navbar />
       <div className="page">
-        <div className="gradient-bg" />
+
 
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -165,12 +164,12 @@ const MapPage = () => {
           </button>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
             <div>
-              <h1 className="page-title">🗺️ Employee Map</h1>
+              <h1 className="page-title">Employee Map</h1>
               <p className="page-subtitle">{markers.length} cities with employees</p>
             </div>
             <div className="card" style={{ padding: '10px 16px', display: 'flex', gap: 16 }}>
               <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-                📍 {employees.length} employees mapped across {markers.length} locations
+                {employees.length} employees mapped across {markers.length} locations
               </span>
             </div>
           </div>
@@ -196,11 +195,11 @@ const MapPage = () => {
                 <Popup>
                   <div style={{ minWidth: 150 }}>
                     <strong style={{ display: 'block', marginBottom: 6, fontSize: 14 }}>
-                      📍 {m.city}
+                      {m.city}
                     </strong>
                     <div style={{ fontSize: 13, color: '#555' }}>
                       {m.employees.slice(0, 5).map((name, j) => (
-                        <div key={j}>👤 {name}</div>
+                        <div key={j}>• {name}</div>
                       ))}
                       {m.employees.length > 5 && (
                         <div style={{ color: '#888', marginTop: 4 }}>
@@ -217,7 +216,7 @@ const MapPage = () => {
 
         {markers.length === 0 && (
           <div className="alert alert-error" style={{ marginTop: 16 }}>
-            ⚠️ No geocodeable cities found in employee data. Cities must match known Indian cities.
+            No geocodeable cities found in employee data. Cities must match known Indian cities.
           </div>
         )}
       </div>

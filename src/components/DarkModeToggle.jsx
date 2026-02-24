@@ -18,7 +18,7 @@ const DarkModeToggle = () => {
       aria-label="Toggle dark mode"
       style={{ fontSize: '18px', padding: '6px 10px' }}
     >
-      {isDark ? '☀️' : '🌙'}
+      {isDark ? 'Light' : 'Dark'}
     </button>
   )
 }

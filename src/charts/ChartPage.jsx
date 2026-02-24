@@ -11,9 +11,9 @@ import Navbar from '../components/Navbar'
 import LoadingSpinner from '../components/LoadingSpinner'
 
 const COLORS = [
-  '#7c3aed', '#6d28d9', '#5b21b6', '#4c1d95',
-  '#0891b2', '#0e7490', '#155e75', '#06b6d4',
-  '#10b981', '#059669'
+  '#4285f4', '#1a73e8', '#1967d2', '#185abc',
+  '#34a853', '#1e8e3e', '#188038', '#137333',
+  '#fbbc04', '#f9ab00'
 ]
 
 const CustomTooltip = ({ active, payload }) => {
@@ -23,11 +23,11 @@ const CustomTooltip = ({ active, payload }) => {
     <div style={{
       background: 'var(--bg-secondary)',
       border: '1px solid var(--border-color)',
-      borderRadius: 10, padding: '12px 16px',
-      boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
+      borderRadius: 8, padding: '10px 14px',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
     }}>
-      <p style={{ fontWeight: 700, marginBottom: 4 }}>{d.payload.name}</p>
-      <p style={{ color: '#10b981', fontSize: 16, fontWeight: 700 }}>
+      <p style={{ fontWeight: 600, marginBottom: 4, fontSize: 13 }}>{d.payload.fullName}</p>
+      <p style={{ color: 'var(--success)', fontSize: 15, fontWeight: 700 }}>
         ₹{Number(d.value).toLocaleString('en-IN')}
       </p>
     </div>
@@ -71,7 +71,7 @@ const ChartPage = () => {
       : employees.slice(0, 10)
 
     return filtered.slice(0, 10).map(emp => ({
-      name: (emp[nameKey] || 'Unknown').split(' ')[0], // first name for brevity
+      name: (emp[nameKey] || 'Unknown').split(' ')[0],
       salary: parseFloat(emp[salaryKey]) || 0,
       fullName: emp[nameKey] || 'Unknown',
     }))
@@ -89,10 +89,9 @@ const ChartPage = () => {
       <>
         <Navbar />
         <div className="page" style={{ textAlign: 'center', paddingTop: 80 }}>
-          <p style={{ fontSize: 40, marginBottom: 16 }}>📊</p>
           <h2>No employee data available</h2>
           <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={() => navigate('/list')}>
-            ← Back to List
+            Back to List
           </button>
         </div>
       </>
@@ -106,8 +105,6 @@ const ChartPage = () => {
     <>
       <Navbar />
       <div className="page">
-        <div className="gradient-bg" />
-
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -116,11 +113,11 @@ const ChartPage = () => {
           <button className="btn btn-secondary btn-sm" onClick={() => navigate(-1)} style={{ marginBottom: 16 }}>
             ← Back
           </button>
-          <h1 className="page-title">📊 Salary Chart</h1>
+          <h1 className="page-title">Salary Chart</h1>
           <p className="page-subtitle">Visualizing employee compensation</p>
         </motion.div>
 
-        {/* Filter Selection */}
+        {/* Search */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -128,11 +125,11 @@ const ChartPage = () => {
           style={{ marginBottom: 24 }}
         >
           <div className="card" style={{ padding: '12px 16px', display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)' }}>🔍 FIND EMPLOYEE:</span>
+            <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Find Employee</span>
             <input
               type="text"
               className="input"
-              placeholder="Type name to update chart..."
+              placeholder="Type name to filter chart…"
               value={search}
               onChange={e => setSearch(e.target.value)}
               style={{ maxWidth: 300, padding: '8px 12px', fontSize: 14 }}
@@ -141,7 +138,6 @@ const ChartPage = () => {
               <button 
                 className="btn btn-secondary btn-sm" 
                 onClick={() => setSearch('')}
-                style={{ height: 'fit-content' }}
               >
                 Reset
               </button>
@@ -152,7 +148,7 @@ const ChartPage = () => {
           </div>
         </motion.div>
 
-        {/* Stats Row */}
+        {/* Stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -160,14 +156,13 @@ const ChartPage = () => {
           style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 24 }}
         >
           {[
-            { label: 'Highest Salary', value: `₹${maxSalary.toLocaleString('en-IN')}`, icon: '🏆', color: '#f59e0b' },
-            { label: 'Average Salary', value: `₹${Math.round(avgSalary).toLocaleString('en-IN')}`, icon: '📈', color: '#10b981' },
-            { label: 'Employees Shown', value: `${chartData.length} of ${employees.length}`, icon: '👥', color: '#7c3aed' },
+            { label: 'Highest Salary', value: `₹${maxSalary.toLocaleString('en-IN')}`, color: '#fbbc04' },
+            { label: 'Average Salary', value: `₹${Math.round(avgSalary).toLocaleString('en-IN')}`, color: 'var(--success)' },
+            { label: 'Employees Shown', value: `${chartData.length} of ${employees.length}`, color: 'var(--accent)' },
           ].map((stat, i) => (
             <div key={i} className="card" style={{ padding: '16px 24px', flex: '1 1 180px' }}>
-              <div style={{ fontSize: 24, marginBottom: 6 }}>{stat.icon}</div>
-              <div style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 4 }}>{stat.label}</div>
-              <div style={{ fontSize: 20, fontWeight: 800, color: stat.color }}>{stat.value}</div>
+              <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{stat.label}</div>
+              <div style={{ fontSize: 20, fontWeight: 700, color: stat.color }}>{stat.value}</div>
             </div>
           ))}
         </motion.div>
@@ -180,10 +175,10 @@ const ChartPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h3 style={{ marginBottom: 24, paddingLeft: 8 }}>Employee Salaries (INR)</h3>
+          <h3 style={{ marginBottom: 24, paddingLeft: 8, fontSize: 16, fontWeight: 600 }}>Employee Salaries (INR)</h3>
           <ResponsiveContainer width="100%" height={380}>
             <BarChart data={chartData} margin={{ top: 10, right: 30, left: 20, bottom: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.07)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
               <XAxis
                 dataKey="name"
                 tick={{ fill: 'var(--text-secondary)', fontSize: 13 }}
@@ -194,9 +189,9 @@ const ChartPage = () => {
                 tick={{ fill: 'var(--text-secondary)', fontSize: 12 }}
                 axisLine={{ stroke: 'var(--border-color)' }}
               />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(124,58,237,0.1)' }} />
+              <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(66,133,244,0.08)' }} />
               <Legend wrapperStyle={{ paddingTop: 16, color: 'var(--text-secondary)' }} />
-              <Bar dataKey="salary" name="Salary (₹)" radius={[6, 6, 0, 0]} maxBarSize={60}>
+              <Bar dataKey="salary" name="Salary (₹)" radius={[4, 4, 0, 0]} maxBarSize={56}>
                 {chartData.map((_, index) => (
                   <Cell key={index} fill={COLORS[index % COLORS.length]} />
                 ))}
