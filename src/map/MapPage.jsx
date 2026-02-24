@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import { useAuth } from '../context/AuthContext'
+import { fetchEmployees } from '../services/api'
 import Navbar from '../components/Navbar'
+import LoadingSpinner from '../components/LoadingSpinner'
 import 'leaflet/dist/leaflet.css'
 
 // Fix default marker icons (Vite/Webpack asset issue)
@@ -77,8 +79,25 @@ const getCoords = (city) => {
 }
 
 const MapPage = () => {
-  const { employees } = useAuth()
+  const { employees, setEmployees } = useAuth()
+  const [loading, setLoading] = useState(employees.length === 0)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (employees.length > 0) return
+    const load = async () => {
+      setLoading(true)
+      try {
+        const data = await fetchEmployees()
+        setEmployees(data)
+      } catch (err) {
+        console.error('Failed to fetch employees', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    load()
+  }, [employees.length, setEmployees])
 
   const cityKey = useMemo(() => {
     if (!employees.length) return 'city'
@@ -107,6 +126,28 @@ const MapPage = () => {
       return acc
     }, [])
   }, [employees, cityKey, nameKey])
+
+  if (loading) return (
+    <>
+      <Navbar />
+      <div className="page"><LoadingSpinner text="Mapping employees…" /></div>
+    </>
+  )
+
+  if (!employees.length) {
+    return (
+      <>
+        <Navbar />
+        <div className="page" style={{ textAlign: 'center', paddingTop: 80 }}>
+          <p style={{ fontSize: 40, marginBottom: 16 }}>🗺️</p>
+          <h2>No employee data available</h2>
+          <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={() => navigate('/list')}>
+            ← Back to List
+          </button>
+        </div>
+      </>
+    )
+  }
 
   return (
     <>

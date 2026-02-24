@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
@@ -6,7 +6,9 @@ import {
   Legend, ResponsiveContainer, Cell
 } from 'recharts'
 import { useAuth } from '../context/AuthContext'
+import { fetchEmployees } from '../services/api'
 import Navbar from '../components/Navbar'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 const COLORS = [
   '#7c3aed', '#6d28d9', '#5b21b6', '#4c1d95',
@@ -33,9 +35,26 @@ const CustomTooltip = ({ active, payload }) => {
 }
 
 const ChartPage = () => {
-  const { employees } = useAuth()
+  const { employees, setEmployees } = useAuth()
+  const [loading, setLoading] = useState(employees.length === 0)
   const [search, setSearch] = useState('')
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (employees.length > 0) return
+    const load = async () => {
+      setLoading(true)
+      try {
+        const data = await fetchEmployees()
+        setEmployees(data)
+      } catch (err) {
+        console.error('Failed to fetch employees', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    load()
+  }, [employees.length, setEmployees])
 
   const chartData = useMemo(() => {
     if (!employees.length) return []
@@ -57,6 +76,13 @@ const ChartPage = () => {
       fullName: emp[nameKey] || 'Unknown',
     }))
   }, [employees, search])
+
+  if (loading) return (
+    <>
+      <Navbar />
+      <div className="page"><LoadingSpinner text="Loading chart data…" /></div>
+    </>
+  )
 
   if (!employees.length) {
     return (
